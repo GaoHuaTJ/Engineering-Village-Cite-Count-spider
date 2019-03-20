@@ -1,7 +1,7 @@
 # Engineering-Village-Cite-Count-spider
 这是一个输入文章标题，返回EigineeringVillage被引次数的爬虫
 
-## 输入的是文章额标题
+## 输入的是文章的标题
 
 ## EiGetSearchId函数除了不能返回文章的被引次数，其他你想要的都有
 
