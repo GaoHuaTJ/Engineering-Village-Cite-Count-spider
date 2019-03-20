@@ -15,7 +15,7 @@ namespace GetSciEi
         {
             const string searchWord =
                 "Time effect of pile-soil-geogrid-cushion interaction of rigid pile composite foundations under high-speed railway embankments";
-            //发送请求拿到searchid
+            //发送请求拿到searchid，并将文章的详细内容全部写入serachId.txt
             var cookie = GetCookies();
             var searchId = EiGetSearchId(GetSearchUrl(searchWord), cookie);
             //组建post的提交数据
@@ -60,18 +60,8 @@ namespace GetSciEi
             request.Headers.Add("X-NewRelic-ID", "VQQAUldRCRAFUFFQBwgCUQ==");
             request.UserAgent = "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/71.0.3578.98 Safari/537.36";
             request.Referer = "https://www.engineeringvillage.com/search/expert.url?usageZone=evlogo&usageOrigin=header";
-
-            //string cookie;
-            //using (FileStream cookieStream = new FileStream(@"C:\Users\我是佟丽娅\Desktop\cookies.txt", FileMode.Open))
-            //{
-            //    using (StreamReader cookieReader = new StreamReader(cookieStream))
-            //    {
-            //        cookie = cookieReader.ReadToEnd();
-            //    }
-            //}
             request.Headers.Add("Cookie", cookie);
             HttpWebResponse searchIdResponse = (HttpWebResponse)request.GetResponse();
-
             string searchId = "";
             using (Stream seachIdStream = new GZipStream(searchIdResponse.GetResponseStream() ?? throw new InvalidOperationException(), CompressionMode.Decompress))
             {
@@ -86,6 +76,7 @@ namespace GetSciEi
             try
             {
                 JObject ja = (JObject)JsonConvert.DeserializeObject(searchId.ToString());
+                Console.WriteLine("请求发送成功\n####################################");
                 Console.WriteLine($"检索到{ja["searchMetaData"]["resultscount"]}条记录");
                 Console.WriteLine($"searchID为{ja["searchMetaData"]["searchId"]}");
                 return ja["searchMetaData"]["searchId"].ToString();
@@ -93,7 +84,7 @@ namespace GetSciEi
             catch (Exception e)//cookies过期的情况下
             {
                 Console.WriteLine(e.Message);
-                Console.WriteLine("更换cookies");//cookies过期情况下推出程序
+                Console.WriteLine("请检查cookies");//cookies过期情况下推出程序
                 Console.ReadKey();
                 Environment.Exit(0);
                 return null;
@@ -121,7 +112,6 @@ namespace GetSciEi
                 {"sid", basicJObject["searchMetaData"]["oAdobeAnalytics"]["visitor"]["sisId"].ToString()}
             };
             Console.WriteLine($"[{formData.ToString()}]");
-            //byte[] bytes = Encoding.UTF8.GetBytes();
             Console.WriteLine();
             return "citedby=" + HttpUtility.UrlEncode($"[{formData.ToString()}]");
         }
@@ -137,11 +127,7 @@ namespace GetSciEi
             //引用的请求地址
             const string url = " https://www.engineeringvillage.com/toolsinscopus/citedbycount.url";
             HttpWebRequest request = WebRequest.CreateHttp(url);
-            // ReSharper disable once AssignNullToNotNullAttribute
-            request.Proxy = null;
-
             request.Method = "POST";
-
             request.UserAgent = "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/71.0.3578.98 Safari/537.36";
             request.Accept = "application/json, text/javascript, */*; q=0.01";
             request.Headers.Add("Accept-Encoding", "gzip, deflate, br");
@@ -160,11 +146,15 @@ namespace GetSciEi
                 requeststStream.Write(temp, 0, formdata.Length);
             }
             HttpWebResponse response = (HttpWebResponse)request.GetResponse();
-            Stream myResponseStream = new GZipStream(response.GetResponseStream() ?? throw new InvalidOperationException(), CompressionMode.Decompress);
-            StreamReader myStreamReader = new StreamReader(myResponseStream ?? throw new InvalidOperationException(), Encoding.Default);
-            string retString = myStreamReader.ReadToEnd();
-            myStreamReader.Close();
-            myResponseStream.Close();
+            string retString;
+            using ( Stream myResponseStream = new GZipStream(response.GetResponseStream() ?? throw new InvalidOperationException(), CompressionMode.Decompress))
+            {
+                using (StreamReader myStreamReader = new StreamReader(myResponseStream ?? throw new InvalidOperationException(), Encoding.Default))
+                {
+                    retString = myStreamReader.ReadToEnd();
+                }
+            }
+            File.WriteAllText($@".\{searchId}的被引次数.txt",retString);
             Console.WriteLine(retString);
         }
 
@@ -177,7 +167,6 @@ namespace GetSciEi
         {
             string basicUrl =
                 $"https://www.engineeringvillage.com/search/submit.url?usageOrigin=searchform&usageZone=expertsearch&editSearch=&isFullJsonResult=true&angularReq=true&CID=searchSubmit&searchtype=Expert&origin=searchform&category=expertsearch&searchWord1={searchWord.Replace(" ", "%20")}&database=1&yearselect=yearrange&startYear=2018&endYear=2018&updatesNo=1&sort=relevance";
-
             return basicUrl;
         }
     }
