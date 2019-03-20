@@ -14,7 +14,7 @@ namespace GetSciEi
         private static void Main(string[] args)
         {
             const string searchWord =
-                "Time effect of pile-soil-geogrid-cushion interaction of rigid pile composite foundations under high-speed railway embankments";
+                "Transportation network redundancy: Complementary measures and computational methods";
             //发送请求拿到searchid，并将文章的详细内容全部写入serachId.txt
             var cookie = GetCookies();
             var searchId = EiGetSearchId(GetSearchUrl(searchWord), cookie);
