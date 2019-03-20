@@ -3,7 +3,7 @@
 
 ## 输入的是文章额标题
 
-## 各个函数可以返回文章的标题、作者等
+## EiGetSearchId函数除了不能返回文章的被引次数，其他你想要的都有
 
 ## 文章的被引次数需要重新发送请求
 
@@ -23,3 +23,12 @@
 
 ![运行结果如下](https://github.com/GaoHuaTJ/Engineering-Village-Cite-Count-spider/blob/master/%E5%9B%BE%E7%89%87/%E8%BF%90%E8%A1%8C%E7%BB%93%E6%9E%9C%E5%A6%82%E4%B8%8B.png)
 
+# 其他
+Excel类里面两个函数是用来读入数据的
+Article类没有什么用，嘻嘻嘻
+
+# ToDo
+将检索到的数据全部整合成一个表
+根据各方需求吧
+
+qidaxiang66@163.com
