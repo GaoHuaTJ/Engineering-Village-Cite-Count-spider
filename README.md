@@ -23,6 +23,14 @@
 
 ![运行结果如下](https://github.com/GaoHuaTJ/Engineering-Village-Cite-Count-spider/blob/master/%E5%9B%BE%E7%89%87/%E8%BF%90%E8%A1%8C%E7%BB%93%E6%9E%9C%E5%A6%82%E4%B8%8B.png)
 
+# 运行结果验证
+
+![输出](https://github.com/GaoHuaTJ/Engineering-Village-Cite-Count-spider/blob/master/%E5%9B%BE%E7%89%87/%E8%A2%AB%E5%BC%95%E6%AC%A1%E6%95%B0%E9%AA%8C%E8%AF%81.png)
+![验证](https://github.com/GaoHuaTJ/Engineering-Village-Cite-Count-spider/blob/master/%E5%9B%BE%E7%89%87/%E8%A2%AB%E5%BC%95%E6%AC%A1%E6%95%B0%E9%AA%8C%E8%AF%811.png)
+
+![输出](https://github.com/GaoHuaTJ/Engineering-Village-Cite-Count-spider/blob/master/%E5%9B%BE%E7%89%87/%E8%A2%AB%E5%BC%95%E6%AC%A1%E6%95%B0%E9%AA%8C%E8%AF%812.png)
+
+![验证](https://github.com/GaoHuaTJ/Engineering-Village-Cite-Count-spider/blob/master/%E5%9B%BE%E7%89%87/%E8%A2%AB%E5%BC%95%E6%AC%A1%E6%95%B0%E9%AA%8C%E8%AF%813.png)
 # 其他
 Excel类里面两个函数是用来读入数据的
 Article类没有什么用，嘻嘻嘻
